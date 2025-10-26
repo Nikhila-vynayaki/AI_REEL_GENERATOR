@@ -40,14 +40,14 @@ A powerful web application that automatically creates Instagram-style reels from
 ## System Architecture
 
 ```mermaid
-     --> User Browser
-     --> Flask Server (main.py)
-     --> user_uploads/{UUID}/
-     --> generate_process.py
-     --> ElevenLabs TTS + FFmpeg
-     --> static/reels/{UUID}.mp4
-     --> Gallery
-```
+flowchart LR
+    A[User Browser] --> B[Flask Server (main.py)]
+    B --> C[user_uploads/{UUID}/]
+    C --> D[generate_process.py]
+    D --> E[ElevenLabs TTS + FFmpeg]
+    E --> F[static/reels/{UUID}.mp4]
+    F --> G[Gallery]
+
 
 - **main.py**: handles web routes, file uploads, and creates the UUID folder for each submission.
 - **generate_process.py**: monitors `user_uploads/` for new folders, calls the TTS function, then runs FFmpeg to create the final reel.
@@ -68,29 +68,31 @@ A powerful web application that automatically creates Instagram-style reels from
 ## Project Structure
 
 ```
+
 AI_REEL_GENERATOR/
-├── main.py                  # Flask web app
-├── generate_process.py      # Background processing daemon
-├── text_to_audio.py         # ElevenLabs TTS integration
-├── config.py                # API configuration
-├── generated_reels.txt      # Tracks processed reels
-├── ffmpeg_command.txt       # FFmpeg reference
+├── main.py # Flask web app
+├── generate_process.py # Background processing daemon
+├── text_to_audio.py # ElevenLabs TTS integration
+├── config.py # API configuration
+├── generated_reels.txt # Tracks processed reels
+├── ffmpeg_command.txt # FFmpeg reference
 ├── static/
-│   ├── reels/               # Generated videos (*.mp4)
-│   ├── css/                 # Stylesheets
-│   └── images/              # Static images
+│ ├── reels/ # Generated videos (\*.mp4)
+│ ├── css/ # Stylesheets
+│ └── images/ # Static images
 ├── templates/
-│   ├── base.html            # Base template layout
-│   ├── index.html           # Homepage
-│   ├── create.html          # Upload form
-│   └── gallery.html         # Reel gallery
+│ ├── base.html # Base template layout
+│ ├── index.html # Homepage
+│ ├── create.html # Upload form
+│ └── gallery.html # Reel gallery
 └── user_uploads/
-    └── [UUID]/
-        ├── input.txt        # FFmpeg concatenation list
-        ├── desc.txt         # Voiceover text
-        ├── audio.mp3        # Generated TTS audio
-        └── [video files]   # Uploaded media
-```
+└── [UUID]/
+├── input.txt # FFmpeg concatenation list
+├── desc.txt # Voiceover text
+├── audio.mp3 # Generated TTS audio
+└── [video files] # Uploaded media
+
+````
 
 Each user upload session is stored in a UUID-named folder under `user_uploads/`. `input.txt` is a FFmpeg concatenation list, `desc.txt` contains the voiceover text, and `audio.mp3` is the generated TTS output.
 
@@ -110,7 +112,7 @@ Each user upload session is stored in a UUID-named folder under `user_uploads/`.
 
 ```bash
 cd AI_REEL_GENERATOR
-```
+````
 
 2. Create and activate a virtual environment:
 
