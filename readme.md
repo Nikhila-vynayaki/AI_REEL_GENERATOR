@@ -39,12 +39,19 @@ A powerful web application that automatically creates Instagram-style reels from
 
 ## System Architecture
 
-UserBrowser[User Browser] --> FlaskServer[Flask Server]
-FlaskServer --> UploadFolder[user_uploads/UUID]
-UploadFolder --> Background[generate_process.py]
-Background --> TTS[ElevenLabs TTS + FFmpeg]
-TTS --> Output[static/reels/UUID.mp4]
-Output --> Gallery[Gallery]
+User Browser
+
+\--> Flask Server (main.py)
+
+\--> user_uploads/{UUID}/
+
+\--> generate_process.py
+
+\--> ElevenLabs TTS + FFmpeg
+
+\--> static/reels/{UUID}.mp4
+
+\-->Gallery
 
 - **main.py**: handles web routes, file uploads, and creates the UUID folder for each submission.
 - **generate_process.py**: monitors `user_uploads/` for new folders, calls the TTS function, then runs FFmpeg to create the final reel.
