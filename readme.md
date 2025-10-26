@@ -39,15 +39,12 @@ A powerful web application that automatically creates Instagram-style reels from
 
 ## System Architecture
 
-```mermaid
-flowchart LR
-    A[User Browser] --> B[Flask Server (main.py)]
-    B --> C[user_uploads/{UUID}/]
-    C --> D[generate_process.py]
-    D --> E[ElevenLabs TTS + FFmpeg]
-    E --> F[static/reels/{UUID}.mp4]
-    F --> G[Gallery]
-
+UserBrowser[User Browser] --> FlaskServer[Flask Server]
+FlaskServer --> UploadFolder[user_uploads/UUID]
+UploadFolder --> Background[generate_process.py]
+Background --> TTS[ElevenLabs TTS + FFmpeg]
+TTS --> Output[static/reels/UUID.mp4]
+Output --> Gallery[Gallery]
 
 - **main.py**: handles web routes, file uploads, and creates the UUID folder for each submission.
 - **generate_process.py**: monitors `user_uploads/` for new folders, calls the TTS function, then runs FFmpeg to create the final reel.
@@ -92,7 +89,7 @@ AI_REEL_GENERATOR/
 ├── audio.mp3 # Generated TTS audio
 └── [video files] # Uploaded media
 
-````
+```
 
 Each user upload session is stored in a UUID-named folder under `user_uploads/`. `input.txt` is a FFmpeg concatenation list, `desc.txt` contains the voiceover text, and `audio.mp3` is the generated TTS output.
 
@@ -112,7 +109,7 @@ Each user upload session is stored in a UUID-named folder under `user_uploads/`.
 
 ```bash
 cd AI_REEL_GENERATOR
-````
+```
 
 2. Create and activate a virtual environment:
 
